@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar navbar-dark bg-dark px-3 m-0">
+  <div class="navbar navbar-dark bg-dark px-3 m-0 col-6-md">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <img class="" alt="" src="../assets/img/Ely.png" height="150" />
