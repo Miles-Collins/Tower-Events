@@ -21,6 +21,13 @@ class EventsService {
     AppState.events.unshift(res.data);
     return res.data;
   }
+  async deleteEvent(eventId) {
+    let url = `api/events/${eventId}`
+    logger.log('Deleting Event', eventId)
+    await api.delete(url)
+    AppState.events = AppState.events.filter(e => e.id != eventId)
+}
+
 }
 
 export const eventsService = new EventsService();

@@ -1,8 +1,9 @@
 <template>
-
-<div class="col-12-md my-3 bg-light text-dark rounded">
+  <div class="col-1">
+  <img class="img-fluid circle" :src="comment.creator.picture" alt=""><span class="mt-3">{{comment.creator.name}}</span>
+  </div>
+<div class="col-12-md bg-light text-dark rounded">
   <span class="selectable" @click.prevent="deleteComment(comment)">X</span>
-    <img :src="comment.name" alt="">
     <p>{{comment.body}}</p>
   </div>
 
@@ -35,5 +36,9 @@ onMounted(() => console.log(AppState.commentProfiles))
 </script>
 
 <style> 
+
+.circle {
+  border-radius: 50%;
+}
 
 </style>

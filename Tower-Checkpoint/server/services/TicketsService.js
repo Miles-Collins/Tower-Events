@@ -18,7 +18,7 @@ class TicketsService{
     return ticket
   }
   async delete(ticketId, userId) {
-    const ticket = await dbContext.Tickets.findById(ticketId).populate('profile', 'name picture')
+    const ticket = await dbContext.Tickets.findById(ticketId)
     if(!ticket){
       throw new BadRequest('No ticket by that Id')
     }
@@ -31,8 +31,8 @@ class TicketsService{
     event.capacity += 1
     // @ts-ignore
     event.save()
-    ticket.archived =! ticket.archived
-    await ticket.save()
+    console.log(ticket)
+    await ticket.remove()
     return `Your ticket was archived`
   }
   

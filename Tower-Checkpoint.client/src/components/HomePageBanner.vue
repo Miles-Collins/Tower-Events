@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-12">
         <div class=" bannerFont m-5">
-          <p>Get ahead of the scalpers.</p>
+          <p class="">Get ahead of the scalpers.</p>
           <p>Reserve your seat now with</p>
           <p>real events for real people.</p>
         </div>
@@ -41,5 +41,6 @@ export default {
    font-size: 2em;
    font-family: MontereyFLF;
    color: antiquewhite;
+   text-shadow: 0 0 5px white, 0 0 10px rgb(0, 0, 0);
  }
 </style>

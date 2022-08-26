@@ -1,6 +1,6 @@
 <template>
   <main class="bg-dark">
-    <Navbar />
+    <Navbar class="col-12"/>
     <router-view />
   </main>
 

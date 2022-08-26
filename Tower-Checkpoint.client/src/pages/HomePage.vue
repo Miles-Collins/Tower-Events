@@ -9,17 +9,17 @@
     <h2 class="text-center">Check out trending categories <span class="sortEmblem"><i class="mdi mdi-filter"></i></span>
     </h2>
   <div class="row justify-content-between pt-4 px-4 buttonFont">
-    <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = ''">All</div>
-    <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'sporting'">Sporting</div>
-    <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'convention'">Convention</div>
-    <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'digital'">Digital</div>
-    <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'concert'">Concert</div>
+    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = ''">All</div>
+    <div class="col-12 col-md-2  btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'sport'">Sporting</div>
+    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'convention'">Convention</div>
+    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'digital'">Digital</div>
+    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'concert'">Concert</div>
   </div>
       </div>
     
     </div>
   <div class="row mx-5">
-    <div v-for="e in events" :key="e.id" class="col-3">
+    <div v-for="e in events" :key="e.id" class="col-12 col-md-3">
       <EventCard :event="e" />
     </div>
   </div>
@@ -95,11 +95,15 @@ export default {
 [X] USERS CAN CHOOSE TO 'ATTEND' AN EVENT, CREATING A RELATIONSHIP (TICKET) BETWEEN USER AND EVENT
 [X] API PASSES ALL POSTMAN TEST
 [X] USERS CAN SEE ALL THE EVENTS THEY ARE ATTENDING (HAVE TICKETS TO)
-[] THE EVENTDETAILS PAGE DISPLAYS ALL EVENT PROPERTIES, THE COMMENTS FOR THAT EVENT, AND IMAGES OF ALL TICKET HOLDERS WITH A TITLE ATTRIBUTE OF THE TICKET HOLDER'S NAME
-[] THE OWNER OF AN EVENT CAN CANCEL THE EVENT FROM THE EVENTSDETAILS PAGE
-[] COMMENTS SHOW THEIR AUTHORS NAME AND IMAGE
-[] UI PREVENTS USERS FROM JOINING AN EVENT (CREATE TICKET) IF AN EVENT IS CANCELED OR DOES NOT HAVE THE AVAILABLE CAPACITY REMAINING
-[] STYLING INDICATION ON EVENTDETAILS PAGE THAT AN EVENT IS CANCELED OR SOLD OUT (COLOR, STRIKE-THROUGH, ECT.)
-[] USERS CAN DELETE THEIR TICKET FOR AN EVENT
+[X] COMMENTS SHOW THEIR AUTHORS NAME AND IMAGE
+[X] THE EVENTDETAILS PAGE DISPLAYS ALL EVENT PROPERTIES, THE COMMENTS FOR THAT EVENT, AND IMAGES OF ALL TICKET HOLDERS WITH A TITLE ATTRIBUTE OF THE TICKET HOLDER'S NAME
+[X] USERS CAN DELETE THEIR TICKET FOR AN EVENT
+[X] THE OWNER OF AN EVENT CAN CANCEL THE EVENT FROM THE EVENTSDETAILS PAGE
+[X] UI PREVENTS USERS FROM JOINING AN EVENT (CREATE TICKET) IF AN EVENT IS CANCELED OR DOES NOT HAVE THE AVAILABLE CAPACITY REMAINING
+[X] STYLING INDICATION ON EVENTDETAILS PAGE THAT AN EVENT IS CANCELED OR SOLD OUT (COLOR, STRIKE-THROUGH, ECT.)
 [X] APP ADHERES TO PHASE I, AND II OF DESIGN REQUIREMENTS
  -->
+
+ <!-- 
+  [] Add in an Edit Account
+  -->

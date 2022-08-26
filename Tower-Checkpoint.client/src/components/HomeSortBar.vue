@@ -6,7 +6,7 @@
   </div>
   <div class="row justify-content-between mx-5 buttonFont">
     <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = ''">All</div>
-    <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'sporting'">Sporting</div>
+    <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'sport'">Sport</div>
     <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'convention'">Convention</div>
     <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'digital'">Digital</div>
     <div class="col-2 btn btn-outline-light rounded-pill buttonFont" @click="filterEvent = 'concert'">Concert</div>

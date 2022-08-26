@@ -1,9 +1,10 @@
 <template>
 
   <div class="container my-5">
-    <div class="row">
+    <div class="row" v-if="event.creatorId == account.id">
+      <button @click.prevent="deleteEvent(event)" class="col-1 btn btn-outline text-light">Cancel</button>
       <div class="col-12-md sickFont">
-        <h1 class="display-3-md">{{ event.name }}</h1>
+        <h1 class="display-1-md">{{ event.name }}</h1>
       </div>
       <div class="col-5-md">
         <img class="img-fluid" :src="event.coverImg" alt="">
@@ -19,20 +20,38 @@
             }}</h5>
           </div>
           <div class="col-12">
-            <h4>Tickets Remaining: {{ event.capacity }}</h4>
-            <button class="btn btn-outline sickFont" 
+            <div v-if="event.isCanceled == true" class="bgRojo p-0 m-0">
+              <h2 class="p-0 m-0 text-center text-dark sold">CANCELLED</h2>
+            </div>
+            <div v-if="event.capacity == 0" class="bgRojo">
+              <h2 class="p-0 m-0 text-dark sold text-center">SOLD OUT</h2>
+            </div>
+
+            <div v-if="event.capacity == 0 || event.isCanceled ==true"></div>
+            <h4 v-else>Tickets Remaining: {{ event.capacity }}</h4>
             
-            :disabled="isAttending == true" @click.prevent="createTicket()">Attend</button>
-            <button v-if="!isCollaborator" class="btn btn-outline sickFont" @click="collab"><i class="mdi mdi-heart"></i>
+            <button class="btn btn-outline sickFont" :disabled="isAttending == true"
+              @click.prevent="createTicket()">Attend</button>
+            <button v-if="!isCollaborator" class="btn btn-outline sickFont" @click="collab"><i
+                class="mdi mdi-heart"></i>
               Like</button>
             <button v-else class="btn btn-danger" @click="removeCollab"><i class="mdi mdi-heart-broken"></i>
               Un-Like</button>
-            <button type="button" class="btn btn-outline sickFont" data-bs-toggle="modal" data-bs-target="#commentModal">Comment</button>
-          <div class="col-12-md" v-if="isAttending == true">
-          <p>You're attending this event!</p>
-          </div>
+            <button type="button" class="btn btn-outline sickFont" data-bs-toggle="modal"
+              data-bs-target="#commentModal">Comment</button>
+            <div class="" v-if="isAttending == true">
+              <p>You're attending this event!</p>
+            </div>
+            <div class="">
+              <h3>Look who else is coming!</h3>
+            </div>
+            <div class="row">
+              <div class="col-1 p-0 my-1" v-for="c in tickets" :key="c.id">
+                <TicketProfiles :ticket="c" />
+              </div>
+            </div>
             <Modal id="commentModal" class="">
-              <CommentForm  />
+              <CommentForm />
             </Modal>
           </div>
         </div>
@@ -48,11 +67,10 @@
       </div>
     </div>
     <div>
-    <h2 class="mt-5 col-12-md text-start">Comments:</h2>
+      <h2 class="mt-5 col-12 text-start">Comments:</h2>
     </div>
     <div class="row" v-for="c in comments" :key="c.id">
-    <div class="col-1">{{account.name}}</div>
-      <CommentsCard class="col-11" :comment="c" />
+      <CommentsCard :comment="c" />
     </div>
 
 
@@ -72,85 +90,98 @@ import Pop from "../utils/Pop"
 import Modal from "../components/Modal.vue"
 import CommentForm from "../components/CommentForm.vue"
 import CommentsCard from "../components/CommentsCard.vue"
+import TicketProfiles from "../components/TicketProfiles.vue"
 
 
 export default {
-    setup() {
-        const route = useRoute();
-        async function getEventById() {
-            try {
-                await eventsService.getById(route.params.eventId);
-            }
-            catch (error) {
-                logger.error(error);
-                Pop.toast(error.message, "error");
-            }
-        }
-        async function getTicketsByEventId() {
-            try {
-                await ticketsService.getTicketByEventId(route.params.eventId);
-            }
-            catch (error) {
-                logger.error(error);
-                Pop.toast(error.message, "error");
-            }
-        }
-        async function getComments() {
-            try {
-                await commentsService.getEventComments(route.params.eventId);
-            }
-            catch (error) {
-                logger.error(error);
-                Pop.toast(error.message, "error");
-            }
-        }
-        
-        onMounted(() => {
-            getEventById();
-            getTicketsByEventId();
-            getComments();
-        });
-        return {
-            event: computed(() => AppState.activeEvent),
-            ticket: computed(() => AppState.tickets),
-            comments: computed(() => AppState.comments),
-            account: computed(() => AppState.account),
-            isAttending: computed(()=> {
-              if (AppState.ticketsProfiles.find(t=> t.eventId == route.params.eventId)){
-                return true
-              }
-              return false
-              }), 
+  setup() {
+    const route = useRoute();
+    async function getEventById() {
+      try {
+        await eventsService.getById(route.params.eventId);
+      }
+      catch (error) {
+        logger.error(error);
+        Pop.toast(error.message, "error");
+      }
+    }
+    async function getTicketsByEventId() {
+      try {
+        let eventTickets = await ticketsService.getTicketByEventId(route.params.eventId);
+        logger.log('Event Tickets:', eventTickets)
+      }
+      catch (error) {
+        logger.error(error);
+        Pop.toast(error.message, "error");
+      }
+    }
+    async function getComments() {
+      try {
+        await commentsService.getEventComments(route.params.eventId);
+      }
+      catch (error) {
+        logger.error(error);
+        Pop.toast(error.message, "error");
+      }
+    }
 
-            async createTicket() {
-          try {
+    onMounted(() => {
+      getEventById();
+      getTicketsByEventId();
+      getComments();
+    });
+    return {
+      event: computed(() => AppState.activeEvent),
+      tickets: computed(() => AppState.tickets),
+      comments: computed(() => AppState.comments),
+      account: computed(() => AppState.account),
+      isAttending: computed(() => {
+        if (AppState.ticketsProfiles.find(t => t.eventId == route.params.eventId)) {
+          return true
+        }
+        return false
+      }),
 
-            let newTicket = {
-              eventId: AppState.activeEvent.id
-            }
-            logger.log('New Ticket', newTicket)
-            await ticketsService.create(newTicket)
-            
-          } catch (error) {
-            logger.error(error)
-            Pop.toast(error.message, 'error')
+      async createTicket() {
+        try {
+
+          let newTicket = {
+            eventId: AppState.activeEvent.id
           }
-        },
-        
+          logger.log('New Ticket', newTicket)
+          await ticketsService.create(newTicket)
 
-        };
-    },
-    components: { Modal, CommentForm, CommentsCard }
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
+
+      async deleteEvent(event) {
+        try {
+          const yes = await Pop.confirm('Delete Event?')
+          if (!yes) { return }
+          await eventsService.deleteEvent(event.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      }
+
+
+    };
+  },
+  components: { Modal, CommentForm, CommentsCard, TicketProfiles }
 }
 </script>
 
 <style>
- .sickFont {
-   font-family: MontereyFLF;
-   color: antiquewhite;
- }
+.sickFont {
+  font-family: MontereyFLF;
+  color: antiquewhite;
+}
 
- .rojo {
+.rojo {
   color: red;
- }
+}
 </style>

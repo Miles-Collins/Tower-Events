@@ -27,6 +27,6 @@ export default {
  }
 
  h1 {
-   font-size: 5em;
+   font-size: 4em;
  }
 </style>
