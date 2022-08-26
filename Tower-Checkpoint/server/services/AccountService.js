@@ -1,3 +1,4 @@
+import { Forbidden } from "@bcwdev/auth0provider/lib/Errors"
 import { dbContext } from '../db/DbContext'
 
 // Private Methods
@@ -72,6 +73,21 @@ class AccountService {
       { $set: update },
       { runValidators: true, setDefaultsOnInsert: true, new: true }
     )
+    return account
+  }
+
+  async edit(accountData) {
+    const account = await dbContext.Account.findByIdAndUpdate(accountData.id)
+    // @ts-ignore
+    account.name = accountData.name || account.name
+    // @ts-ignore
+    account.picture = accountData.picture || account.picture
+    // @ts-ignore
+    account.email = accountData.email || account.email
+    // @ts-ignore
+    account.subs = accountData.subs || account.subs
+    // @ts-ignore
+    await account.save()
     return account
   }
 }

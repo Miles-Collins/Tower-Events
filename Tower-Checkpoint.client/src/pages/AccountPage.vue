@@ -1,9 +1,16 @@
 <template>
   <div class="about text-center">
     <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
+    <img class="circle" :src="account.picture" alt="" />
     <p>{{ account.email }}</p>
   </div>
+
+<div class="row m-auto">
+  <div class="col-3 offset-5"><h2>Edit Account:</h2></div>
+  <div class="col-6 m-auto ">
+ <AccountForm />
+  </div> 
+</div>
 
   <div class="row">
       <div class="col-12 text-center"><h1>Your Tickets:</h1></div>
@@ -13,6 +20,7 @@
         <EventTicket :ticket="t" />
       </div>
     
+ 
   </div>
 </template>
 
