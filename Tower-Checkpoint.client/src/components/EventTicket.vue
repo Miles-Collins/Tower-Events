@@ -1,9 +1,11 @@
 <template>
+<router-link :to="{ name: 'EventDetails', params: {eventId: ticket.event.id}}">
   <div class="bg-dark rounded ticketBackground">
     <img class="change mt-3" :src="ticket.event.coverImg" alt="">
     <p class="text-center p-0 m-0 text-dark">{{ticket.event.name}}</p>
     <!-- <button class="btn btn-danger" @click.prevent="deleteTicket"><i class="mdi mdi-delete-forever"></i></button> -->
   </div>
+  </router-link>
 </template>
 
 <script>

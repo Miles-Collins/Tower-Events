@@ -13,6 +13,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { AppState } from "../AppState";
+import { router } from "../router";
 import { commentsService } from "../services/CommentsService";
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
@@ -33,6 +34,7 @@ export default {
           logger.log('Creating Comment', editable.value)
           await commentsService.create(editable.value)
           Pop.success('Comment Created')
+          router.push({ name:'EventDetails', params: { eventId: editable.value.eventId}})
         } catch (error) {
           logger.error(error)
           Pop.error(error.message, 'error')

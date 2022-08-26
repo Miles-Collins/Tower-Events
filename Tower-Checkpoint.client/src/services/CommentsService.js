@@ -6,6 +6,7 @@ class CommentsService {
   async create(newComment) {
     const res = await api.post("api/comments", newComment);
     logger.log("Creating comment", res.data);
+    AppState.comments.push(res.data)
     AppState.commentProfiles.push(res.data);
   }
 
@@ -21,6 +22,7 @@ class CommentsService {
     AppState.commentProfiles = AppState.commentProfiles.filter(
       c => c.id != commentId
     );
+    AppState.comments = AppState.comments.filter( c => c.id != commentId)
   }
 }
 

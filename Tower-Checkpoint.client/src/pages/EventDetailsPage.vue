@@ -176,7 +176,9 @@ export default {
         try {
           const yes = await Pop.confirm('Delete Comment?')
           if (!yes) { return }
+          logger.log(editable.value.eventId)
           await commentsService.deleteComment(comment.id)
+          router.push({ name: 'EventDetails', params: {eventId: editable.value.eventId}})
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')

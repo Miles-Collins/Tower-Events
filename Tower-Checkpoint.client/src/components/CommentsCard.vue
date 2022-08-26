@@ -24,6 +24,7 @@
 import { computed } from "@vue/reactivity";
 import { onMounted } from "vue";
 import { AppState } from "../AppState";
+import { router } from "../router";
 import { commentsService } from "../services/CommentsService";
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
@@ -45,6 +46,8 @@ export default {
           const yes = await Pop.confirm('Delete Comment?')
           if (!yes) {return}
           await commentsService.removeComment(comment.id)
+          logger.log(comment.eventId)
+          router.push({ name: 'EventDetails', params: {eventId: comment.eventId}})
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
