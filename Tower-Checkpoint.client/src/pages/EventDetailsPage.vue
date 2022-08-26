@@ -1,5 +1,5 @@
 <template>
-
+  <!-- <div class="container-fluid"> -->
   <div class="container my-5">
     <div class="row" v-if="event.creatorId == account.id">
       <button @click.prevent="deleteEvent(event)" class="col-1 btn btn-outline text-light">Cancel</button>
@@ -14,67 +14,70 @@
           <div class="col-12-md sickFont">
             <h5>{{ event.description }}</h5>
           </div>
-          <div class="col-12-md my-3">
-            <h5>{{ event.name }} will be at the {{ event.location }} at {{ new
-                Date(event.startDate).toLocaleDateString('en-Us')
-            }}</h5>
-          </div>
-          <div class="col-12">
-            <div v-if="event.isCanceled == true" class="bgRojo p-0 m-0">
-              <h2 class="p-0 m-0 text-center text-dark sold">CANCELLED</h2>
-            </div>
-            <div v-if="event.capacity == 0" class="bgRojo">
-              <h2 class="p-0 m-0 text-dark sold text-center">SOLD OUT</h2>
-            </div>
-
-            <div v-if="event.capacity == 0 || event.isCanceled ==true"></div>
-            <h4 v-else>Tickets Remaining: {{ event.capacity }}</h4>
-            
-            <button class="btn btn-outline sickFont" :disabled="isAttending == true"
-              @click.prevent="createTicket()">Attend</button>
-            <button v-if="!isCollaborator" class="btn btn-outline sickFont" @click="collab"><i
-                class="mdi mdi-heart"></i>
-              Like</button>
-            <button v-else class="btn btn-danger" @click="removeCollab"><i class="mdi mdi-heart-broken"></i>
-              Un-Like</button>
-            <button type="button" class="btn btn-outline sickFont" data-bs-toggle="modal"
-              data-bs-target="#commentModal">Comment</button>
-            <div class="" v-if="isAttending == true">
-              <p>You're attending this event!</p>
-            </div>
-            <div class="">
-              <h3>Look who else is coming!</h3>
-            </div>
-            <div class="row">
-              <div class="col-1 p-0 my-1" v-for="c in tickets" :key="c.id">
-                <TicketProfiles :ticket="c" />
-              </div>
-            </div>
-            <Modal id="commentModal" class="">
-              <CommentForm />
-            </Modal>
-          </div>
         </div>
-      </div>
-      <div class="col-2">
-        <!-- SECTION collab button hide if you are already a collaborator -->
-      </div>
-      <div class="col-7">
-        <div class="row">
-          <!-- COLLAB PROFILE -->
-          <!--  -->
+        <div class="col-12-md my-3">
+          <h5>{{ event.name }} will be at the {{ event.location }} at {{ new
+              Date(event.startDate).toLocaleDateString('en-Us')
+          }}</h5>
+        </div>
+        <div class="col-12">
+          <div v-if="event.isCanceled == true" class="bgRojo p-0 m-0">
+            <h2 class="p-0 m-0 text-center text-dark sold">CANCELLED</h2>
+          </div>
+          <div v-if="event.capacity == 0" class="bgRojo">
+            <h2 class="p-0 m-0 text-dark sold text-center">SOLD OUT</h2>
+          </div>
+
+          <div v-if="event.capacity == 0 || event.isCanceled == true"></div>
+          <h4 v-else>Tickets Remaining: {{ event.capacity }}</h4>
+
+          <button class="btn btn-outline sickFont" :disabled="isAttending == true"
+            @click.prevent="createTicket()">Attend</button>
+          <button v-if="!isCollaborator" class="btn btn-outline sickFont" @click="collab"><i class="mdi mdi-heart"></i>
+            Like</button>
+          <button v-else class="btn btn-danger" @click="removeCollab"><i class="mdi mdi-heart-broken"></i>
+            Un-Like</button>
+          <button type="button" class="btn btn-outline sickFont" data-bs-toggle="modal"
+            data-bs-target="#commentModal">Comment</button>
+          <div class="" v-if="isAttending == true">
+            <p>You're attending this event!</p>
+          </div>
+          <div class="">
+            <h3>Look who else is coming!</h3>
+          </div>
+          <div class="row">
+            <div class="col-1 p-0 my-1" v-for="c in tickets" :key="c.id">
+              <TicketProfiles :ticket="c" />
+            </div>
+          </div>
+          <Modal id="commentModal" class="">
+            <CommentForm />
+          </Modal>
         </div>
       </div>
     </div>
-    <div>
-      <h2 class="mt-5 col-12 text-start">Comments:</h2>
+    <div class="col-2">
+      <!-- SECTION collab button hide if you are already a collaborator -->
     </div>
-    <div class="row" v-for="c in comments" :key="c.id">
-      <CommentsCard :comment="c" />
+    <div class="col-7">
+      <div class="row">
+        <!-- COLLAB PROFILE -->
+        <!--  -->
+      </div>
     </div>
-
-
   </div>
+  <div>
+  <div class="">
+    <h2 class="mt-5 col-12 text-start">Comments:</h2>
+  </div>
+  <div class="row m-5 rounded" v-for="c in comments" :key="c.id">
+    <CommentsCard :comment="c" />
+  </div>
+  </div>
+
+
+
+
 
 </template>
 
@@ -91,6 +94,7 @@ import Modal from "../components/Modal.vue"
 import CommentForm from "../components/CommentForm.vue"
 import CommentsCard from "../components/CommentsCard.vue"
 import TicketProfiles from "../components/TicketProfiles.vue"
+import EventBanner from "../components/EventBanner.vue"
 
 
 export default {
@@ -166,12 +170,23 @@ export default {
           logger.error(error)
           Pop.toast(error.message, 'error')
         }
+      },
+
+      async deleteComment(comment) {
+        try {
+          const yes = await Pop.confirm('Delete Comment?')
+          if (!yes) { return }
+          await commentsService.deleteComment(comment.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
       }
 
 
     };
   },
-  components: { Modal, CommentForm, CommentsCard, TicketProfiles }
+  components: { Modal, CommentForm, CommentsCard, TicketProfiles, EventBanner, EventBanner, EventBanner }
 }
 </script>
 

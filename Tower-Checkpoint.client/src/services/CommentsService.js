@@ -19,7 +19,7 @@ class CommentsService {
     const res = await api.delete("api/comments/" + commentId);
     logger.log("Removing Comment", res.data);
     AppState.commentProfiles = AppState.commentProfiles.filter(
-      (c) => c.id != commentId
+      c => c.id != commentId
     );
   }
 }

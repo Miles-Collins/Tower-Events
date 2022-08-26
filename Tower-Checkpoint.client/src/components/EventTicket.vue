@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-dark p-2 rounded">
-    <p class="text-center p-0 m-0">{{ticket.event.name}}</p>
-    <img class="img-fluid" :src="ticket.event.coverImg" alt="" srcset="">
+  <div class="bg-dark rounded ticketBackground">
+    <img class="change mt-3" :src="ticket.event.coverImg" alt="">
+    <p class="text-center p-0 m-0 text-dark">{{ticket.event.name}}</p>
     <!-- <button class="btn btn-danger" @click.prevent="deleteTicket"><i class="mdi mdi-delete-forever"></i></button> -->
   </div>
 </template>
@@ -44,4 +44,16 @@ export default {
 </script>
 
 <style>
+
+.ticketBackground {
+   background-image: url(../assets/img/Ticket.png);
+   background-position: center;
+   background-size: cover;
+   height: 100 px;
+ }
+
+.change {
+  height: 100px;
+}
+
 </style>
