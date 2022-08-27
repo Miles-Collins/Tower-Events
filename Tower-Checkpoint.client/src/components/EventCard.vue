@@ -3,7 +3,7 @@
   <router-link :to="{ name: 'EventDetails', params: { eventId: event.id } }">
     <div class="card selectable text-light mx-0 mx-md-2 bg-dark text-start my-4 eventCard">
       <div>
-      <img class="img-fluid" :src=event.coverImg>
+      <img class="eventPicture" :src=event.coverImg>
       <div class="mx-3">
         <h5 class="mt-3">{{ event.name }}</h5>
         <p>{{ new Date(event.startDate).toLocaleDateString('en-US') }}</p>
@@ -64,6 +64,12 @@ export default {
 
 .sold {
   font-family: CutOutsFLF;
+}
+
+.eventPicture {
+  height: auto;
+  width: 100%;
+  image-orientation: from-image;  
 }
 
 </style>

@@ -10,7 +10,7 @@
 
   <div class="col-10 bgComment text-dark">
   <div class='row'>
-    <span class="selectable text-end" @click.prevent="deleteComment(comment)">X</span>
+    <span v-if="comment.creator.id == account.id" class="selectable text-end" @click.prevent="deleteComment(comment)">X</span>
   </div>
  
   <div>
@@ -40,6 +40,7 @@ export default {
 
     return {
       commentProfiles: computed(() => AppState.commentProfiles),
+      account: computed(() => AppState.account),
 
   async deleteComment(comment) {
         try {

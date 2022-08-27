@@ -1,8 +1,8 @@
 <template>
   <!-- <div class="container-fluid"> -->
   <div class="container my-5">
-    <div class="row" v-if="event.creatorId == account.id">
-      <button @click.prevent="deleteEvent(event)" class="col-1 btn btn-outline text-light">Cancel</button>
+    <div class="row" >
+      <button v-if="event.creatorId == account.id" @click.prevent="deleteEvent(event)" class="col-1 btn btn-outline text-light">Cancel</button>
       <div class="col-12-md sickFont">
         <h1 class="display-1-md">{{ event.name }}</h1>
       </div>
@@ -29,11 +29,11 @@
           </div>
 
           <div v-if="event.capacity == 0 || event.isCanceled == true"></div>
-          <h4 v-else>Tickets Remaining: {{ event.capacity }}</h4>
-
-          <button class="btn btn-outline sickFont" :disabled="isAttending == true"
+          <div v-else>
+          <h4 >Tickets Remaining: {{ event.capacity }}</h4>
+          <button v-if="event.isCanceled == false || event.capacity > 0" class="btn btn-outline sickFont" :disabled="isAttending == true"
             @click.prevent="createTicket()">Attend</button>
-          <button v-if="!isCollaborator" class="btn btn-outline sickFont" @click="collab"><i class="mdi mdi-heart"></i>
+          <button v-if='!collab' class="btn btn-outline sickFont" @click="collab"><i class="mdi mdi-heart"></i>
             Like</button>
           <button v-else class="btn btn-danger" @click="removeCollab"><i class="mdi mdi-heart-broken"></i>
             Un-Like</button>
@@ -50,6 +50,9 @@
               <TicketProfiles :ticket="c" />
             </div>
           </div>
+          </div>
+            
+
           <Modal id="commentModal" class="">
             <CommentForm />
           </Modal>
@@ -95,6 +98,7 @@ import CommentForm from "../components/CommentForm.vue"
 import CommentsCard from "../components/CommentsCard.vue"
 import TicketProfiles from "../components/TicketProfiles.vue"
 import EventBanner from "../components/EventBanner.vue"
+import { accountService } from "../services/AccountService"
 
 
 export default {
@@ -129,10 +133,20 @@ export default {
       }
     }
 
+    async function getAccount() {
+      try {
+        await accountService.getAccount()
+      } catch (error) {
+        logger.error(error)
+        Pop.toast(error.message, 'error')
+      }
+    }
+
     onMounted(() => {
       getEventById();
       getTicketsByEventId();
       getComments();
+      getAccount();
     });
     return {
       event: computed(() => AppState.activeEvent),
