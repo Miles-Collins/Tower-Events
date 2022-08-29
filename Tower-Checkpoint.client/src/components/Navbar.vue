@@ -6,7 +6,7 @@
       </div>
     </router-link>
     <div class="col-2 offset-6">
-      <button type="button" class="noBorder square text-dark py-4 selectable bg-white" data-bs-toggle="modal"
+      <button type="button" class="noBorder square text-dark buttonPadding selectable bg-white" data-bs-toggle="modal"
         data-bs-target="#exampleModal">Create Event</button>
       <Modal id="exampleModal" class="">
         <EventForm />
@@ -55,4 +55,10 @@ a:hover {
 .noBorder{
   border: none;
 }
+
+.buttonPadding{
+  padding-top: 27px;
+  padding-bottom: 27px;
+}
+
 </style>

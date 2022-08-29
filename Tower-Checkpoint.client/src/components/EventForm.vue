@@ -36,6 +36,9 @@
         <option value="sport">Sport</option>
         <option value="digital">Digital</option>
         <option value="concert">Concert</option>
+        <option value="food">Food</option>
+        <option value="travel">Travel</option>
+        <option value="health">Health</option>
       </select>
     </div>
     <div class="col-12">

@@ -7,10 +7,10 @@ export const EventSchema = new Schema ({
   description: {type: String, required: true, },
   coverImg: { type: String, required: true,},
   location: { type: String, required: true,},
-  capacity: { type: Number, required: true, min: 0},
+  capacity: { type: Number, min: 0},
   startDate: { type: Date, required: true},
   isCanceled: {type: Boolean, required: true, default: false},
-  type: {type: String, enum: ['convention', 'sport', 'digital', 'concert',], required: true, lowercase: true, default: 'concert'},
+  type: {type: String, enum: ['convention', 'sport', 'digital', 'concert', 'food', 'travel', 'health'], required: true, lowercase: true, default: 'concert'},
 }, {
   timestamps: true, toJSON: {virtuals: true}
 })

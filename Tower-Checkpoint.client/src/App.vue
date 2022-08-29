@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-dark">
+  <main class="bg-light">
     <Navbar class="col-12"/>
     <router-view />
   </main>

@@ -2,28 +2,31 @@
 
 <HomePageBanner />
 <!-- <HomeSortBar /> -->
-<div class="container-fluid">
+<div class="container">
     <div class="row">
     
-          <div class="col-12 my-4 sortFont ">
+    <div class="col-12 my-4 sortFont ">
     <h2 class="text-center">Check out trending categories <span class="sortEmblem"><i class="mdi mdi-filter"></i></span>
     </h2>
-  <div class="row justify-content-between pt-4 px-4 buttonFont">
-    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = ''">All</div>
-    <div class="col-12 col-md-2  btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'sport'">Sporting</div>
-    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'convention'">Convention</div>
-    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'digital'">Digital</div>
-    <div class="col-12 col-md-2 btn btn-outline-light rounded-pill buttonFont my-2" @click="filterEvent = 'concert'">Concert</div>
+  <div class="row justify-space-between mx-auto pt-4 px-5">
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = ''"> All </div>
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = 'sport'">Sport & Fitness</div>
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = 'convention'">Convention</div>
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = 'digital'">Digital</div>
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = 'concert'">Concert</div>
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = 'health'">Health</div>
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = 'travel'">Travel & Outdoor</div>
+    <div class="col-12 col-md-2 btn btn-outline-light square buttonFont my-1 py-3 mx-auto" @click="filterEvent = 'food'">Food & Drink</div>
   </div>
-      </div>
+</div>
     
     </div>
-  <div class="row mx-5">
+  <div class="row">
     <div v-for="e in events" :key="e.id" class="col-12 col-md-3">
       <EventCard :event="e" />
     </div>
   </div>
-</div>
+</div>  
 </template>
 
 <script>
@@ -66,7 +69,7 @@ export default {
  .sortFont {
    font-size: 1.2em;
    font-family: MontereyFLF;
-   color: antiquewhite
+   color: rgb(0, 0, 0)
  }
 
  .sortEmblem {
@@ -75,8 +78,10 @@ export default {
  }
 
  .buttonFont {
-   color: antiquewhite;
-   border-color: antiquewhite;
+   color: rgb(0, 0, 0);
+   border-color: rgba(161, 161, 161, 0.086);
+   background-color: #f8f7fa;
+   width: 290px;
  }
 </style>
 

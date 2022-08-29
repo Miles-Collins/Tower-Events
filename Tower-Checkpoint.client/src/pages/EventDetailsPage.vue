@@ -1,15 +1,19 @@
 <template>
   <!-- <div class="container-fluid"> -->
   <div class="container my-5">
-    <div class="row" >
-      <button v-if="event.creatorId == account.id" @click.prevent="deleteEvent(event)" class="col-1 btn btn-outline text-light">Cancel</button>
-      <div class="col-12-md sickFont">
-        <h1 class="display-1-md">{{ event.name }}</h1>
+    <div class="row">
+      <div class="col-6">
+        <button v-if="event.creatorId == account.id" @click.prevent="deleteEvent(event)"
+          class="col-1 btn btn-outline text-light">Cancel</button>
+        <div class="col-12-md sickFont">
+          <h1 class="display-1-md">{{ event.name }}</h1>
+        </div>
+        <div class="col-5-md">
+          <img class="img-fluid glass" :src="event.coverImg" :title="event.name" alt="">
+        </div>
       </div>
-      <div class="col-5-md">
-        <img class="img-fluid" :src="event.coverImg" alt="">
-      </div>
-      <div class="col-4-md">
+      <div class="col-1 borderRight"></div>
+      <div class=" col-5 px-5">
         <div class="row sickFont my-4">
           <div class="col-12-md sickFont">
             <h5>{{ event.description }}</h5>
@@ -30,28 +34,28 @@
 
           <div v-if="event.capacity == 0 || event.isCanceled == true"></div>
           <div v-else>
-          <h4 >Tickets Remaining: {{ event.capacity }}</h4>
-          <button v-if="event.isCanceled == false || event.capacity > 0" class="btn btn-outline sickFont" :disabled="isAttending == true"
-            @click.prevent="createTicket()">Attend</button>
-          <button v-if='!collab' class="btn btn-outline sickFont" @click="collab"><i class="mdi mdi-heart"></i>
-            Like</button>
-          <button v-else class="btn btn-danger" @click="removeCollab"><i class="mdi mdi-heart-broken"></i>
-            Un-Like</button>
-          <button type="button" class="btn btn-outline sickFont" data-bs-toggle="modal"
-            data-bs-target="#commentModal">Comment</button>
-          <div class="" v-if="isAttending == true">
-            <p>You're attending this event!</p>
-          </div>
-          <div class="">
-            <h3>Look who else is coming!</h3>
-          </div>
-          <div class="row">
-            <div class="col-1 p-0 my-1" v-for="c in tickets" :key="c.id">
-              <TicketProfiles :ticket="c" />
+            <h4>Tickets Remaining: {{ event.capacity }}</h4>
+            <button v-if="event.isCanceled == false || event.capacity > 0" class="btn btn-outline sickFont"
+              :disabled="isAttending == true" @click.prevent="createTicket()">Attend</button>
+            <button v-if='!collab' class="btn btn-outline sickFont" @click="collab"><i class="mdi mdi-heart"></i>
+              Like</button>
+            <button v-else class="btn btn-danger" @click="removeCollab"><i class="mdi mdi-heart-broken"></i>
+              Un-Like</button>
+            <button type="button" class="btn btn-outline sickFont" data-bs-toggle="modal"
+              data-bs-target="#commentModal">Comment</button>
+            <div class="" v-if="isAttending == true">
+              <p>You're attending this event!</p>
+            </div>
+            <div class="">
+              <h3>Look who else is coming!</h3>
+            </div>
+            <div class="row">
+              <div class="col-1 p-0 my-1" v-for="c in tickets" :key="c.id">
+                <TicketProfiles :ticket="c" />
+              </div>
             </div>
           </div>
-          </div>
-            
+
 
           <Modal id="commentModal" class="">
             <CommentForm />
@@ -70,12 +74,12 @@
     </div>
   </div>
   <div>
-  <div class="">
-    <h2 class="mt-5 col-12 text-start">Comments:</h2>
-  </div>
-  <div class="row m-5 rounded" v-for="c in comments" :key="c.id">
-    <CommentsCard :comment="c" />
-  </div>
+    <div class="">
+      <h2 class="mt-5 col-12 text-start">Comments:</h2>
+    </div>
+    <div class="row m-5 rounded" v-for="c in comments" :key="c.id">
+      <CommentsCard :comment="c" />
+    </div>
   </div>
 
 
@@ -192,7 +196,7 @@ export default {
           if (!yes) { return }
           logger.log(editable.value.eventId)
           await commentsService.deleteComment(comment.id)
-          router.push({ name: 'EventDetails', params: {eventId: editable.value.eventId}})
+          router.push({ name: 'EventDetails', params: { eventId: editable.value.eventId } })
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
@@ -208,11 +212,15 @@ export default {
 
 <style>
 .sickFont {
-  font-family: MontereyFLF;
-  color: antiquewhite;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(0, 0, 0);
 }
 
 .rojo {
   color: red;
+}
+
+.borderRight {
+  border-right: 1px solid black;
 }
 </style>
